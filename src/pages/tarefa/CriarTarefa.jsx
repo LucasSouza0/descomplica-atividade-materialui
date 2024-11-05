@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { FormControl, InputLabel, Input, FormHelperText } from '@mui/material';
+import { FormControl, InputLabel, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
@@ -9,7 +9,6 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 
-//Declaração do componente CriarTarefa, recebendo como props, do Componente ListarTarefa, os states handClose, tarefas e setTarefas
 const CriarTarefa = ({handleClose, tarefas, setTarefas}) =>{
   const [idTarefa, setIdTarefa] = useState();
   const [tituloTarefa, setTituloTarefa] = useState('');
@@ -20,7 +19,6 @@ const CriarTarefa = ({handleClose, tarefas, setTarefas}) =>{
   const [statusTarefa, setStatusTarefa] = useState('');
   
   useEffect(() => {
-    //Abaixo uma variável é declarada para armazenar o id da tarefa, somando 1 ao maior id existente atualmente no state Tarefas
     let proximoId = Math.max(...tarefas.map(tarefa => tarefa.idTarefa)) + 1;
     setIdTarefa(proximoId);
   },[]);
@@ -34,8 +32,6 @@ const CriarTarefa = ({handleClose, tarefas, setTarefas}) =>{
   };
 
   const handleSalvar = () => {
-    //Para inspecionarmos nosso código, uma boa estratégia é utilizarmos o console.log.
-    //  Com o console.log, podemos visualizar o seu conteúdo na aba Console, no inspecionador de elementos, na janela do navegador
     console.log(`id: ${idTarefa} \n titulo: ${tituloTarefa} \n descrição: ${descricaoTarefa} \n inicio: ${inicioTarefa} \n fim: ${fimTarefa} \n recurso: ${recursoTarefa} \n status: ${statusTarefa}`);
 
     setTarefas(
@@ -50,7 +46,6 @@ const CriarTarefa = ({handleClose, tarefas, setTarefas}) =>{
           statusTarefa
         }
       ]);
-    //console.log(`Tarefas: ` + JSON.stringify(tarefas));
     handleClose();
   };
 
@@ -61,47 +56,63 @@ const CriarTarefa = ({handleClose, tarefas, setTarefas}) =>{
           title="Tarefas"
           subheader="Cadastro de Tarefas"
         /> 
-        <CardContent sx={{
-          width: '95%',
-          maxWidth: '100%',
-        }}>
+
+        <CardContent sx={{ width: '95%', maxWidth: '100%' }}>
           <Grid item xs={12}>
             <FormControl fullWidth>
-              <Input id="tarefa_titulo" aria-describedby="tarefa_titulo_helper_text" value={tituloTarefa} onChange={e => { setTituloTarefa(e.target.value) }} />
-              <FormHelperText id="tarefa_titulo_helper_text">Título da Tarefa.</FormHelperText>
+              <TextField 
+                id="tarefa_titulo" 
+                label="Título da Tarefa." 
+                variant="outlined" 
+                value={tituloTarefa} 
+                size="small" 
+                onChange={e => { setTituloTarefa(e.target.value) }} 
+              />
             </FormControl>
           </Grid>
-          <Grid item xs={12}>  
+
+          <Grid item xs={12} mt={3}>  
             <FormControl fullWidth>
-              <Input id="tarefa_descricao" aria-describedby="tarefa_descricao_helper_text" value={descricaoTarefa} onChange={e => { setDescricaoTarefa(e.target.value) }} />
-              <FormHelperText id="tarefa_descricao_helper_text">Descrição da Tarefa.</FormHelperText>
+              <TextField 
+                id="tarefa_descricao" 
+                label="Descrição da Tarefa." 
+                variant="outlined" 
+                value={descricaoTarefa} 
+                size="small" 
+                onChange={e => { setDescricaoTarefa(e.target.value) }} 
+              />
             </FormControl>
           </Grid>
+
           <Grid container spacing={2} mt={1}>
             <Grid item xs={3}>  
-              <FormControl>
-                <Input id="tarefa_inicio" type="date" aria-describedby="tarefa_inicio_helper_text" value={inicioTarefa} onChange={e => { setInicioTarefa(e.target.value) }}
-                  sx={{
-                    color:'rgba(0, 0, 0, 0.6)',
-                    fontWeight: 400,
-                    paddingLeft:'13px'
-                  }} 
+              <FormControl fullWidth>
+                <TextField 
+                  id="tarefa_inicio" 
+                  label="Início da Tarefa." 
+                  variant="outlined" 
+                  value={inicioTarefa} 
+                  type="date"
+                  size="small"
+                  onChange={e => { setInicioTarefa(e.target.value) }} 
                 />
-                <FormHelperText id="tarefa_inicio_helper_text">Início da Tarefa.</FormHelperText>
               </FormControl>
             </Grid>  
+
             <Grid item xs={3}>  
-              <FormControl>
-                <Input id="tarefa_fim" type="date" aria-describedby="tarefa_fim_helper_text" value={fimTarefa} onChange={e => { setFimTarefa(e.target.value) }}
-                  sx={{
-                    color:'rgba(0, 0, 0, 0.6)',
-                    fontWeight: 400,
-                    paddingLeft:'13px'
-                  }} 
+              <FormControl fullWidth>
+                <TextField 
+                  id="tarefa_fim" 
+                  label="Fim da Tarefa." 
+                  variant="outlined" 
+                  value={fimTarefa} 
+                  type="date"
+                  size="small"
+                  onChange={e => { setFimTarefa(e.target.value) }} 
                 />
-                <FormHelperText id="tarefa_fim_helper_text">Fim da Tarefa.</FormHelperText>
               </FormControl>
             </Grid>
+
             <Grid item xs={3}>  
               <FormControl fullWidth>
                 <InputLabel htmlFor="tarefa_recurso">Recurso</InputLabel>
